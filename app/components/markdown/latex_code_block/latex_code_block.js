@@ -162,21 +162,6 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             flexDirection: 'row',
             flex: 1,
         },
-        lineNumbers: {
-            alignItems: 'center',
-            backgroundColor: changeOpacity(theme.centerChannelColor, 0.05),
-            borderRightColor: changeOpacity(theme.centerChannelColor, 0.15),
-            borderRightWidth: StyleSheet.hairlineWidth,
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            paddingVertical: 4,
-            width: 21,
-        },
-        lineNumbersText: {
-            color: changeOpacity(theme.centerChannelColor, 0.5),
-            fontSize: 12,
-            lineHeight: 18,
-        },
         rightColumn: {
             flexDirection: 'column',
             flex: 1,
@@ -187,11 +172,6 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             flex: 1,
             flexDirection: 'row',
             overflow: 'scroll', // Doesn't actually cause a scrollbar, but stops text from wrapping
-        },
-        codeText: {
-            color: changeOpacity(theme.centerChannelColor, 0.65),
-            fontSize: 12,
-            lineHeight: 18,
         },
         plusMoreLinesText: {
             color: changeOpacity(theme.centerChannelColor, 0.4),

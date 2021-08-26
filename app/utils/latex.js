@@ -65,10 +65,10 @@ function getKatexHtml(content, katexOptions, htmlStyleOptions = {}) {
             .katexBox {${styleString}}
         </style>
         <body onLoad="{
-            setTimeout(() => {window.ReactNativeWebView.postMessage(document.getElementById('katexSpan').offsetHeight);}, 250);
+            setTimeout(() => {window.ReactNativeWebView.postMessage(document.getElementById('katexDiv').offsetHeight);}, 250);
             true;    
         }">
-            <div class="katexBox" id="katexSpan">
+            <div class="katexBox" id="katexDiv">
                 ${katexHtml}
             </div>
         </body>
