@@ -3,11 +3,11 @@
 
 import React from 'react';
 import {Keyboard, View, Text, StyleSheet} from 'react-native';
+import Katex from 'react-native-katex';
 
 import {goToScreen} from '@actions/navigation';
 import FormattedText from '@components/formatted_text';
 import TouchableWithFeedback from '@components/touchable_with_feedback';
-import {getKatexWebview} from '@utils/latex';
 import {getDisplayNameForLanguage} from '@utils/markdown';
 import {preventDoubleTap} from '@utils/tap';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
@@ -15,7 +15,6 @@ import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 import MarkdownCodeBlock from '../markdown_code_block/markdown_code_block';
 
 const MAX_LINES = 2;
-const ZOOM = 2;
 
 export default class LatexCodeBlock extends MarkdownCodeBlock {
     constructor(props) {
@@ -121,17 +120,20 @@ export default class LatexCodeBlock extends MarkdownCodeBlock {
             );
         }
 
-        const katexDisplayStyleOptions = {
-            throwOnError: false,
-            displayMode: true,
-            maxSize: 200,
-            maxExpand: 100,
-            fleqn: true,
-        };
-
-        const htmlStyleOptions = {
-            zoom: ZOOM,
-        };
+        const inlineStyle = `
+html, body {
+    background-color: #fafafa;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.katex {
+    font-size: 4em;
+    margin-left: 50px;
+    margin-top: 50px;
+    justify-content: flex-start;
+    align-items: flex-start;
+}`;
 
         return (
             <TouchableWithFeedback
@@ -141,8 +143,14 @@ export default class LatexCodeBlock extends MarkdownCodeBlock {
             >
                 <View style={style.container}>
                     <View style={style.rightColumn}>
-                        <View style={[style.code, {height: this.state.webViewHeight}]}>
-                            {getKatexWebview(content, katexDisplayStyleOptions, htmlStyleOptions, this.onWebViewMessage)}
+                        <View style={style.code}>
+                            <Katex
+                                expression={content}
+                                style={{flex: 1}}
+                                inlineStyle={inlineStyle}
+                                displayMode={true}
+                                throwOnError={false}
+                            />
                         </View>
                         {plusMoreLines}
                     </View>

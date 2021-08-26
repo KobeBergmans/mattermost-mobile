@@ -7,10 +7,10 @@ import {
     BackHandler,
     ScrollView,
 } from 'react-native';
+import Katex from 'react-native-katex';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {popTopScreen} from '@actions/navigation';
-import {getKatexWebview} from '@utils/latex';
 import {makeStyleSheetFromTheme} from '@utils/theme';
 
 export default class Latex extends React.PureComponent {
@@ -35,17 +35,19 @@ export default class Latex extends React.PureComponent {
     render() {
         const style = getStyleSheet(this.props.theme);
 
-        const katexDisplayStyleOptions = {
-            throwOnError: false,
-            displayMode: true,
-            maxSize: 200,
-            maxExpand: 100,
-            fleqn: true,
-        };
-
-        const htmlStyleOptions = {
-            zoom: 3,
-        };
+        const inlineStyle = `
+html, body {
+  background-color: #fafafa;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.katex {
+  font-size: 4em;
+  margin-left: 50px;
+  margin-top: 50px;
+}
+`;
 
         return (
             <SafeAreaView
@@ -56,7 +58,13 @@ export default class Latex extends React.PureComponent {
                     style={[style.scrollContainer]}
                     contentContainerStyle={style.code}
                 >
-                    {getKatexWebview(this.props.content, katexDisplayStyleOptions, htmlStyleOptions)}
+                    <Katex
+                        expression={this.props.content}
+                        style={{flex: 1}}
+                        inlineStyle={inlineStyle}
+                        displayMode={true}
+                        throwOnError={false}
+                    />
                 </ScrollView>
             </SafeAreaView>
         );
